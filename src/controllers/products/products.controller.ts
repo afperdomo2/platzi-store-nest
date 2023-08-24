@@ -25,14 +25,14 @@ export class ProductsController {
   }
 
   @Get(':id')
-  getOne(@Param('id') id: number) {
+  findOne(@Param('id') id: number) {
     return {
       message: `Obtener #${id}`,
     };
   }
 
   @Get()
-  getAll(
+  findAll(
     @Query('limit') limit: number = 100, // Valor por defecto
     @Query('offset') offset = 0, // Con el valor por defecto se puede inferir el tipo (number)
     @Query('brand') brand: string,

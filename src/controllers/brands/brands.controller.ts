@@ -13,14 +13,14 @@ import {
 @Controller('brands')
 export class BrandsController {
   @Get(':id')
-  getOne(@Param('id') id: number) {
+  findOne(@Param('id') id: number) {
     return {
       message: `Obtener #${id}`,
     };
   }
 
   @Get()
-  getAll() {
+  findAll() {
     return {
       message: `Listar todos`,
     };
