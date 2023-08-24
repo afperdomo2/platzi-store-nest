@@ -9,10 +9,21 @@ import {
   Query,
   HttpStatus,
   HttpCode,
+  Res,
 } from '@nestjs/common';
+
+import { Response } from 'express';
 
 @Controller('products')
 export class ProductsController {
+  @Post('validate')
+  validate(@Res() response: Response) {
+    // Realiza una respuesta manual con Express
+    response.status(202).send({
+      message: 'Validado correctamente',
+    });
+  }
+
   @Get(':id')
   getOne(@Param('id') id: number) {
     return {
