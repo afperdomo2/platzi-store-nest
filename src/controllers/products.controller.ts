@@ -14,6 +14,7 @@ import {
 
 import { Response } from 'express';
 import { ProductsService } from '../services/products.service';
+import { ParseIdPipe } from '../common/parse-id/parse-id.pipe';
 
 @Controller('products')
 export class ProductsController {
@@ -28,7 +29,7 @@ export class ProductsController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseIdPipe) id: number) {
     return this.productService.findOne(id);
   }
 
