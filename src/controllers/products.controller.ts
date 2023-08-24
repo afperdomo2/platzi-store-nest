@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 
 import { Response } from 'express';
-import { ProductsService } from '../../services/products/products.service';
+import { ProductsService } from '../services/products.service';
 
 @Controller('products')
 export class ProductsController {

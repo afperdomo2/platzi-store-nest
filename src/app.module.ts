@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ProductsController } from './controllers/products/products.controller';
-import { BrandsController } from './controllers/brands/brands.controller';
-import { CustomersController } from './controllers/customers/customers.controller';
-import { OrdersController } from './controllers/orders/orders.controller';
-import { UsersController } from './controllers/users/users.controller';
-import { CategoriesController } from './controllers/categories/categories.controller';
-import { ProductsService } from './services/products/products.service';
-import { CustomersService } from './services/customers/customers.service';
-import { UsersService } from './services/users/users.service';
-import { BrandsService } from './services/brands/brands.service';
-import { CategoriesService } from './services/categories/categories.service';
-import { OrdersService } from './services/orders/orders.service';
+import { BrandsController } from './controllers/brands.controller';
+import { CategoriesController } from './controllers/categories.controller';
+import { CustomersController } from './controllers/customers.controller';
+import { OrdersController } from './controllers/orders.controller';
+import { ProductsController } from './controllers/products.controller';
+import { UsersController } from './controllers/users.controller';
+import { BrandsService } from './services/brands.service';
+import { CategoriesService } from './services/categories.service';
+import { CustomersService } from './services/customers.service';
+import { OrdersService } from './services/orders.service';
+import { ProductsService } from './services/products.service';
+import { UsersService } from './services/users.service';
 
 @Module({
   imports: [],
