@@ -20,16 +20,16 @@ import { ParseIdPipe } from '../common/parse-id/parse-id.pipe';
 export class ProductsController {
   constructor(private productService: ProductsService) {}
 
-  @Post('validate')
-  validate(@Res() response: Response) {
+  @Post('validate/:id')
+  validate(@Res() response: Response, @Param('id', ParseIdPipe) id: number) {
     // Realiza una respuesta manual con Express
     response.status(202).send({
-      message: 'Validado correctamente',
+      message: `Validado correctamente el Id ${id}`,
     });
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIdPipe) id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.productService.findOne(id);
   }
 
