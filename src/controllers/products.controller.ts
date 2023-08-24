@@ -50,9 +50,6 @@ export class ProductsController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', ParseIntPipe) id: number) {
-    return {
-      message: 'acción de borrar',
-      id,
-    };
+    return this.productService.remove(id);
   }
 }
