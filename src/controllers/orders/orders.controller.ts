@@ -45,7 +45,7 @@ export class OrdersController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  delete(@Param('id') id: number) {
+  remove(@Param('id') id: number) {
     return {
       message: 'acción de borrar',
       id,
