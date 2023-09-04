@@ -6,4 +6,4 @@ import { OrdersModule } from './orders/orders.module';
 @Module({
   imports: [CustomersModule, UsersModule, OrdersModule],
 })
-export class UsersParentModule {}
+export class UsersGroupModule {}
