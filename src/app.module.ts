@@ -8,10 +8,13 @@ import { ProductsGroupModule } from './modules/products/products.module';
 import { UsersGroupModule } from './modules/users/users.module';
 import { DatabaseModule } from './database/database.module';
 
+import { enviroments } from './enviroments';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      // Configurar el ambiente automaticamente
+      envFilePath: enviroments[process.env.NODE_ENV] || '.env',
       isGlobal: true,
     }),
     HttpModule,

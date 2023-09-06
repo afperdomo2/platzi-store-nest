@@ -10,7 +10,7 @@ export class AppService {
 
   getHello(): string {
     const apiKey = this.configService.get('API_KEY');
-    console.log(this.tasks);
-    return `Hello World!, API key => ${apiKey}`;
+    const dbName = this.configService.get('DB_NAME');
+    return `Hello World!, API key => ${apiKey}, Database name => ${dbName}`;
   }
 }

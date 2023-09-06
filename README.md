@@ -68,13 +68,17 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 - Website - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## Otras configuraciones
+## Ejecutar diferentes entornos
 
 ```bash
 # Pasar una variable de entorno en windows
+$env:NODE_ENV = 'dev'; npm run start:dev
+$env:NODE_ENV = 'stag'; npm run start:dev
 $env:NODE_ENV = 'prod'; npm run start:dev
 
 # pasar una variable de entorno en Linux
+NODE_ENV=dev npm run start:dev
+NODE_ENV=stag npm run start:dev
 NODE_ENV=prod npm run start:dev
 ```
 
