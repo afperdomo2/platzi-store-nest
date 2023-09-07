@@ -9,12 +9,13 @@ import { UsersGroupModule } from './modules/users/users.module';
 import { DatabaseModule } from './database/database.module';
 
 import { enviroments } from './enviroments';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      // Configurar el ambiente automaticamente
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
+      load: [configuration],
       isGlobal: true,
     }),
     HttpModule,
