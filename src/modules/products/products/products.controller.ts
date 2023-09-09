@@ -16,12 +16,21 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ParseIdPipe } from '../../../common/parse-id/parse-id.pipe';
 import { Response } from 'express';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCreatedResponse,
+  ApiAcceptedResponse,
+} from '@nestjs/swagger';
 
+@ApiTags('products')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post('validate/:id')
+  @ApiOperation({ summary: 'Valida si un producto está activo' })
+  @ApiAcceptedResponse({ description: 'Validado correctamente' })
   validate(@Res() response: Response, @Param('id', ParseIdPipe) id: number) {
     // Realiza una respuesta manual con Express
     response.status(202).send({
@@ -30,6 +39,7 @@ export class ProductsController {
   }
 
   @Post()
+  @ApiCreatedResponse({ description: 'Creado correctamente' })
   create(@Body() createProduct: CreateProductDto) {
     return this.productsService.create(createProduct);
   }
