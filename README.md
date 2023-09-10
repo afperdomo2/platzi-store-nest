@@ -82,6 +82,19 @@ NODE_ENV=stag npm run start:dev
 NODE_ENV=prod npm run start:dev
 ```
 
+## 🐳 Docker Compose
+
+```sh
+# Ejecutar todos los contenedores
+docker-compose up -d
+
+# Apagar los servicios
+docker-compose down
+
+# Ejecutarlos de forma individual
+docker-compose up -d postgres
+```
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
