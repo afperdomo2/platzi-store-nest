@@ -20,8 +20,8 @@ export class UsersService {
 
   findAll() {
     const apiKey = this.config.apiKey;
-    const dbName = this.config.database.name;
-    console.info(apiKey, dbName);
+    const name = this.config.database.name;
+    console.info(apiKey, name);
     return `This action returns all users`;
   }
 

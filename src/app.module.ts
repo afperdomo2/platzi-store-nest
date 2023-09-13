@@ -5,7 +5,7 @@ import { lastValueFrom } from 'rxjs';
 
 import { enviroments } from './enviroments';
 import configuration from './config/configuration';
-import envValidations from './config/envValidations';
+import schemaConfig from './config/schema.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductsGroupModule } from './modules/products/products.module';
@@ -18,7 +18,7 @@ import { DatabaseModule } from './database/database.module';
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
       load: [configuration],
       isGlobal: true,
-      validationSchema: envValidations,
+      validationSchema: schemaConfig,
     }),
     HttpModule,
     ProductsGroupModule,
