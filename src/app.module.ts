@@ -11,6 +11,7 @@ import { AppService } from './app.service';
 import { ProductsGroupModule } from './modules/products/products.module';
 import { UsersGroupModule } from './modules/users/users.module';
 import { DatabaseModule } from './database/database.module';
+import { ExampleModule } from './example.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { DatabaseModule } from './database/database.module';
     ProductsGroupModule,
     UsersGroupModule,
     DatabaseModule,
+    ExampleModule,
   ],
   controllers: [AppController],
   providers: [

@@ -19,9 +19,4 @@ export class AppController {
   otherEndpoint() {
     return 'Endpoint con slash: /other/';
   }
-
-  @Get('tasks')
-  getTasks() {
-    return this.appService.getTasks();
-  }
 }
