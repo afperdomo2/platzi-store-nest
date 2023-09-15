@@ -55,6 +55,7 @@ export class ProductsController {
   }
 
   @Patch(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProduct: UpdateProductDto,

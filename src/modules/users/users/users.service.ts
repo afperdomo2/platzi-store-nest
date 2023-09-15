@@ -29,11 +29,11 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  getOrdersByUser(id: number): Order {
+  async getOrdersByUser(id: number): Promise<Order> {
     return {
       date: new Date(Date.now()),
       user: { id },
-      products: this.productService.findAll(),
+      products: await this.productService.findAll(),
     };
   }
 
