@@ -1,17 +1,20 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config/dist';
+
+import configuration from 'src/config/configuration';
+import databaseConfig from 'src/config/database.config';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Order } from '../orders/entities/order.entity';
 import { ProductsService } from 'src/modules/products/products/products.service';
-
-import configuration from 'src/config/configuration';
 
 @Injectable()
 export class UsersService {
   constructor(
     private productService: ProductsService,
     @Inject(configuration.KEY) private config: ConfigType<typeof configuration>,
+    @Inject(databaseConfig.KEY)
+    private dbConfig: ConfigType<typeof databaseConfig>,
   ) {}
 
   create(createUserDto: CreateUserDto) {
@@ -20,7 +23,7 @@ export class UsersService {
 
   findAll() {
     const apiKey = this.config.apiKey;
-    const name = this.config.database.name;
+    const name = this.dbConfig.postgres.database;
     console.info(apiKey, name);
     return `This action returns all users`;
   }

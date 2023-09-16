@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   postgres:
-    image: 'postgres:14'
+    image: postgres:14
     environment:
       - POSTGRES_DB=platzi_store_nestjs
       - POSTGRES_USER=felipe
@@ -11,3 +11,23 @@ services:
       - '5432:5432'
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+
+  mysql:
+    image: mysql:8
+    environment:
+      - MYSQL_DATABASE=platzi_store_nestjs
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - PMA_HOST=mysql
+    ports:
+      - '8080:80'
+    depends_on:
+      - mysql

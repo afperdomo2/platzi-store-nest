@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 
 import { enviroments } from './enviroments';
 import configuration from './config/configuration';
+import databaseConfig from './config/database.config';
 import schemaConfig from './config/schema.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -17,7 +18,7 @@ import { ExampleModule } from './example.module';
   imports: [
     ConfigModule.forRoot({
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
-      load: [configuration],
+      load: [configuration, databaseConfig],
       isGlobal: true,
       validationSchema: schemaConfig,
     }),

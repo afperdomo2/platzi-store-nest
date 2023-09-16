@@ -39,3 +39,4 @@ lerna-debug.log*
 .prod.env
 .stag.env
 postgres_data
+mysql_data

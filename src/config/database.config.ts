@@ -1,12 +1,21 @@
-import configuration from "./configuration";
+import { registerAs } from '@nestjs/config/dist';
 
-export default {
-  type: 'mysql',
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: 'root',
-  database: 'test',
-  entities: [],
-  synchronize: true,
-};
+export default registerAs('database', () => {
+  return {
+    databaseType: process.env.DATABASE_TYPE,
+    postgres: {
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(process.env.POSTGRES_PORT, 10),
+      database: process.env.POSTGRES_DATABASE,
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+    },
+    mysql: {
+      host: process.env.MYSQL_HOST,
+      port: parseInt(process.env.MYSQL_PORT, 10),
+      database: process.env.MYSQL_DATABASE,
+      user: process.env.MYSQL_USER,
+      password: process.env.MYSQL_ROOT_PASSWORD,
+    },
+  };
+});
