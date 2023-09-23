@@ -17,6 +17,6 @@ export class Product {
   @Column('int')
   stock: number;
 
-  @Column('varchar')
+  @Column('varchar', { length: 255 })
   image: string;
 }

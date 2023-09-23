@@ -1,24 +1,23 @@
-import { Module } from '@nestjs/common';
 import { HttpModule, HttpService } from '@nestjs/axios';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config/dist';
 import { lastValueFrom } from 'rxjs';
 
-import { enviroments } from './enviroments';
-import configuration from './config/configuration';
-import databaseConfig from './config/database.config';
-import schemaConfig from './config/schema.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import configuration from './config/configuration';
+import schemaConfig from './config/schema.config';
+import { DatabaseModule } from './database/database.module';
+import { enviroments } from './enviroments';
+import { ExampleModule } from './example.module';
 import { ProductsGroupModule } from './modules/products/products.module';
 import { UsersGroupModule } from './modules/users/users.module';
-import { DatabaseModule } from './database/database.module';
-import { ExampleModule } from './example.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: enviroments[process.env.NODE_ENV] || '.env',
-      load: [configuration, databaseConfig],
+      load: [configuration],
       isGlobal: true,
       validationSchema: schemaConfig,
     }),
