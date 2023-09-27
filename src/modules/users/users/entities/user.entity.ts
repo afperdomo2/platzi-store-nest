@@ -1,6 +1,35 @@
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Customer } from '../../customers/entities/customer.entity';
+
+@Entity({ name: 'users' })
 export class User {
+  @PrimaryGeneratedColumn()
   id: number;
-  email?: string;
-  password?: string;
-  role?: string;
+
+  @Column('varchar', { length: 255 })
+  email: string;
+
+  @Column('varchar', { length: 255 })
+  password: string;
+
+  @Column('varchar', { length: 100 })
+  role: string;
+
+  @OneToOne(() => Customer, ({ user }) => user, { nullable: true })
+  @JoinColumn()
+  customer: Customer;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

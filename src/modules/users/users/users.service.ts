@@ -1,47 +1,48 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config/dist';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-import configuration from 'src/config/configuration';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Order } from '../orders/entities/order.entity';
-import { ProductsService } from 'src/modules/products/products/products.service';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private productService: ProductsService,
-    @Inject(configuration.KEY) private config: ConfigType<typeof configuration>,
-  ) {}
+  constructor(@InjectRepository(User) private repository: Repository<User>) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    const newUser = this.repository.create(createUserDto);
+    return await this.repository.save(newUser);
   }
 
-  findAll() {
-    const apiKey = this.config.apiKey;
-    const name = this.config.postgres.database;
-    console.info(apiKey, name);
-    return `This action returns all users`;
+  async findAll() {
+    return await this.repository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const user = await this.repository.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException(`user ${id} not found`);
+    }
+    return user;
   }
 
-  async getOrdersByUser(id: number): Promise<Order> {
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.findOne(id);
+    this.repository.merge(user, updateUserDto);
+    return await this.repository.save(user);
+  }
+
+  async remove(id: number) {
+    const user = await this.findOne(id);
+    return await this.repository.delete(user);
+  }
+
+  getOrdersByUser(id: number) {
     return {
       date: new Date(Date.now()),
-      user: { id },
-      products: await this.productService.findAll(),
+      id,
+      products: [],
     };
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
   }
 }
