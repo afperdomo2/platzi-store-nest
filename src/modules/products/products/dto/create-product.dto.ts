@@ -5,14 +5,14 @@
  * Los DTO son objetos simples que tienen solo los datos que son necesarios para una
  * tarea específica.
  */
+import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsString,
-  IsUrl,
-  IsPositive,
   IsInt,
   IsNotEmpty,
+  IsPositive,
+  IsString,
+  IsUrl,
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateProductDto {
   @IsString()

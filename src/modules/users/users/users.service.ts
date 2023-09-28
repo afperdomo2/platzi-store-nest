@@ -5,22 +5,35 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { CustomersService } from '../customers/customers.service';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(User) private repository: Repository<User>) {}
+  constructor(
+    @InjectRepository(User) private repository: Repository<User>,
+    private customersService: CustomersService,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
+    const { email } = createUserDto;
+    await this.validateEmailAviable(email);
+
     const newUser = this.repository.create(createUserDto);
+    if (createUserDto.customerId) {
+      const customer = await this.customersService.findOne(
+        createUserDto.customerId,
+      );
+      newUser.customer = customer;
+    }
     return await this.repository.save(newUser);
   }
 
-  async findAll() {
-    return await this.repository.find();
+  async findAll(options?: any) {
+    return await this.repository.find({ ...options });
   }
 
-  async findOne(id: number) {
-    const user = await this.repository.findOneBy({ id });
+  async findOne(id: number, options?: any) {
+    const user = await this.repository.findOne({ where: { id }, ...options });
     if (!user) {
       throw new NotFoundException(`user ${id} not found`);
     }
@@ -36,6 +49,13 @@ export class UsersService {
   async remove(id: number) {
     const user = await this.findOne(id);
     return await this.repository.delete(user);
+  }
+
+  async validateEmailAviable(email: string): Promise<any> {
+    const userEmail = await this.repository.findOneBy({ email });
+    if (userEmail) {
+      throw new NotFoundException(`Email ${email} is already in use`);
+    }
   }
 
   getOrdersByUser(id: number) {
