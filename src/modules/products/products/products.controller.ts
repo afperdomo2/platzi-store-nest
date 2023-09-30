@@ -1,27 +1,27 @@
 import {
-  Controller,
-  Res,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  ParseIntPipe,
-  HttpStatus,
+  Get,
   HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Res,
 } from '@nestjs/common';
-import { ProductsService } from './products.service';
+import {
+  ApiAcceptedResponse,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { Response } from 'express';
+import { ParseIdPipe } from '../../../common/parse-id/parse-id.pipe';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { ParseIdPipe } from '../../../common/parse-id/parse-id.pipe';
-import { Response } from 'express';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiCreatedResponse,
-  ApiAcceptedResponse,
-} from '@nestjs/swagger';
+import { ProductsService } from './products.service';
 
 @ApiTags('products')
 @Controller('products')
@@ -46,12 +46,12 @@ export class ProductsController {
 
   @Get()
   findAll() {
-    return this.productsService.findAll();
+    return this.productsService.findAll({ relations: ['brand'] });
   }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.productsService.findOne(id);
+    return this.productsService.findOne(id, { relations: ['brand'] });
   }
 
   @Patch(':id')

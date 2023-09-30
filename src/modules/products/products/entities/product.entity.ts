@@ -1,10 +1,12 @@
 import {
   Column,
-  Entity,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Brand } from '../../brands/entities/brand.entity';
 
 @Entity({ name: 'products' })
 export class Product {
@@ -25,6 +27,9 @@ export class Product {
 
   @Column('varchar', { length: 255 })
   image: string;
+
+  @ManyToOne(() => Brand, ({ products }) => products)
+  brand: Brand;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -17,12 +17,15 @@ export class ProductsService {
     return await this.repository.save(newProduct);
   }
 
-  async findAll() {
-    return await this.repository.find();
+  async findAll(options?: any) {
+    return await this.repository.find({ ...options });
   }
 
-  async findOne(id: number) {
-    const product = await this.repository.findOneBy({ id });
+  async findOne(id: number, options?: any) {
+    const product = await this.repository.findOne({
+      where: { id },
+      ...options,
+    });
     if (!product) {
       throw new NotFoundException(`Product ${id} not found`);
     }
