@@ -14,6 +14,7 @@ import {
 import {
   ApiAcceptedResponse,
   ApiCreatedResponse,
+  ApiNoContentResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
@@ -39,23 +40,28 @@ export class ProductsController {
   }
 
   @Post()
-  @ApiCreatedResponse({ description: 'Creado correctamente' })
+  @ApiOperation({ summary: 'Create a new product' })
+  @ApiCreatedResponse({ description: 'Product created successfully' })
   create(@Body() createProduct: CreateProductDto) {
     return this.productsService.create(createProduct);
   }
 
   @Get()
+  @ApiOperation({ summary: 'List all products' })
   findAll() {
     return this.productsService.findAll({ relations: ['brand'] });
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Find a product' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.findOne(id, { relations: ['brand'] });
   }
 
   @Patch(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Update product data' })
+  @ApiNoContentResponse({ description: 'Product updated successfully' })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateProduct: UpdateProductDto,
@@ -65,6 +71,8 @@ export class ProductsController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete a product' })
+  @ApiNoContentResponse({ description: 'Product deleted successfully' })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.remove(id);
   }

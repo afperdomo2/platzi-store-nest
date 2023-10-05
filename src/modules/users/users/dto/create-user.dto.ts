@@ -11,17 +11,17 @@ import {
 export class CreateUserDto {
   @IsEmail()
   @IsNotEmpty()
-  @ApiProperty({ description: "The user's Email" })
+  @ApiProperty({ description: 'The user Email' })
   readonly email: string;
 
   @IsString()
   @IsStrongPassword()
   @IsNotEmpty()
-  @ApiProperty({ description: "The user's Password" })
+  @ApiProperty({ description: 'The user Password' })
   readonly password: string;
 
   @IsNotEmpty()
-  @ApiProperty({ description: "The user's Role" })
+  @ApiProperty({ description: 'The user Role' })
   readonly role: string;
 
   @IsPositive()

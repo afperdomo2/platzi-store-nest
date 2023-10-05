@@ -17,26 +17,31 @@ import {
 export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: 'Nombre del producto' })
+  @ApiProperty({ description: 'The product name' })
   readonly name: string;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ description: 'Descripción del producto' })
+  @ApiProperty({ description: 'The product description' })
   readonly description: string;
 
   @IsPositive()
   @IsNotEmpty()
-  @ApiProperty({ description: 'Precio del producto' })
+  @ApiProperty({ description: 'The product price' })
   readonly price: number;
 
   @IsInt()
   @IsNotEmpty()
-  @ApiProperty({ description: 'Stock del producto' })
+  @ApiProperty({ description: 'The product stock' })
   readonly stock: number;
 
   @IsUrl()
   @IsNotEmpty()
-  @ApiProperty({ description: 'URL de la imagen del producto' })
+  @ApiProperty({ description: 'The product URL image' })
   readonly image: string;
+
+  @IsPositive()
+  @IsNotEmpty()
+  @ApiProperty({ description: 'The Brand Id' })
+  readonly brandId: number;
 }
