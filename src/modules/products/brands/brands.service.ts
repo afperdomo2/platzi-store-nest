@@ -16,7 +16,7 @@ export class BrandsService {
   }
 
   async findAll(options?: any) {
-    return this.repository.find({ ...options });
+    return await this.repository.find({ ...options });
   }
 
   async findOne(id: number, options?: any) {
@@ -30,11 +30,11 @@ export class BrandsService {
   async update(id: number, updateBrandDto: UpdateBrandDto) {
     const brand = await this.findOne(id);
     this.repository.merge(brand, updateBrandDto);
-    return this.repository.save(brand);
+    return await this.repository.save(brand);
   }
 
   async remove(id: number) {
-    const brand = await this.findOne(id);
-    return this.repository.delete(brand);
+    await this.findOne(id);
+    return await this.repository.delete(id);
   }
 }

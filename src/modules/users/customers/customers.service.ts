@@ -24,7 +24,7 @@ export class CustomersService {
   async findOne(id: number) {
     const customer = await this.repository.findOneBy({ id });
     if (!customer) {
-      throw new NotFoundException(`customer ${id} not found`);
+      throw new NotFoundException(`customer #${id} not found`);
     }
     return customer;
   }
@@ -36,7 +36,7 @@ export class CustomersService {
   }
 
   async remove(id: number) {
-    const customer = await this.findOne(id);
-    return await this.repository.delete(customer);
+    await this.findOne(id);
+    return await this.repository.delete(id);
   }
 }

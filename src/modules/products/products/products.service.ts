@@ -27,7 +27,7 @@ export class ProductsService {
       ...options,
     });
     if (!product) {
-      throw new NotFoundException(`Product ${id} not found`);
+      throw new NotFoundException(`Product #${id} not found`);
     }
     return product;
   }
@@ -39,7 +39,7 @@ export class ProductsService {
   }
 
   async remove(id: number) {
-    const product = await this.findOne(id);
-    return await this.repository.delete(product);
+    await this.findOne(id);
+    return await this.repository.delete(id);
   }
 }

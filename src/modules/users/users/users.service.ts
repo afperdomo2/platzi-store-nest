@@ -47,8 +47,8 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const user = await this.findOne(id);
-    return await this.repository.delete(user);
+    await this.findOne(id);
+    return await this.repository.delete(id);
   }
 
   async validateEmailAviable(email: string): Promise<any> {
