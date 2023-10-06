@@ -5,8 +5,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Brand } from '../../brands/entities/brand.entity';
+import { Category } from '../../categories/entities/category.entity';
 
 @Entity({ name: 'products' })
 export class Product {
@@ -36,4 +39,8 @@ export class Product {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToMany(() => Category, ({ products }) => products)
+  @JoinTable({ name: 'products_categories' })
+  categories: Category[];
 }

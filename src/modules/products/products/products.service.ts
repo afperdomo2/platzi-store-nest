@@ -6,12 +6,14 @@ import { BrandsService } from '../brands/brands.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
+import { CategoriesService } from '../categories/categories.service';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product) private repository: Repository<Product>,
     private brandService: BrandsService,
+    private categoryService: CategoriesService,
   ) {}
 
   async create(createProduct: CreateProductDto) {
@@ -19,6 +21,12 @@ export class ProductsService {
     if (createProduct.brandId) {
       const brand = await this.brandService.findOne(createProduct.brandId);
       newProduct.brand = brand;
+    }
+    if (createProduct.categoriesIds) {
+      const categories = await this.categoryService.findByIds(
+        createProduct.categoriesIds,
+      );
+      newProduct.categories = categories;
     }
     return await this.repository.save(newProduct);
   }

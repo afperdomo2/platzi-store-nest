@@ -55,7 +55,9 @@ export class ProductsController {
   @Get(':id')
   @ApiOperation({ summary: 'Find a product' })
   findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.productsService.findOne(id, { relations: ['brand'] });
+    return this.productsService.findOne(id, {
+      relations: ['brand', 'categories'],
+    });
   }
 
   @Patch(':id')
