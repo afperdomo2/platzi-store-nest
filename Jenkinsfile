@@ -1,9 +1,11 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('Build'){
-            sh "docker-compose down -v"
-            sh "docker-compose up"
+    stages {
+        stage('Build') {
+            steps {
+                sh "docker-compose down -v"
+                sh "docker-compose up"
+            }
         }
     }
 }
