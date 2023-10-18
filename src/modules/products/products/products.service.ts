@@ -3,10 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { BrandsService } from '../brands/brands.service';
+import { CategoriesService } from '../categories/categories.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
-import { CategoriesService } from '../categories/categories.service';
 
 @Injectable()
 export class ProductsService {
@@ -52,6 +52,12 @@ export class ProductsService {
       const brand = await this.brandService.findOne(updateProduct.brandId);
       product.brand = brand;
     }
+    if (updateProduct.categoriesIds) {
+      const categories = await this.categoryService.findByIds(
+        updateProduct.categoriesIds,
+      );
+      product.categories = categories;
+    }
     this.repository.merge(product, updateProduct);
     return await this.repository.save(product);
   }
@@ -59,5 +65,24 @@ export class ProductsService {
   async remove(id: number) {
     await this.findOne(id);
     return await this.repository.delete(id);
+  }
+
+  async addCategoryToProduct(productId: number, categoryId: number) {
+    const product = await this.findOne(productId, {
+      relations: ['categories'],
+    });
+    const category = await this.categoryService.findOne(categoryId);
+    product.categories.push(category);
+    return this.repository.save(product);
+  }
+
+  async removeCategoryToProduct(productId: number, categoryId: number) {
+    const product = await this.findOne(productId, {
+      relations: ['categories'],
+    });
+    product.categories = product.categories.filter(
+      ({ id }) => id !== categoryId,
+    );
+    return this.repository.save(product);
   }
 }
