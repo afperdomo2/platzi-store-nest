@@ -31,7 +31,7 @@ export class Product {
   @Column('varchar', { length: 255 })
   image: string;
 
-  @ManyToOne(() => Brand, ({ products }) => products)
+  @ManyToOne(() => Brand, ({ products }) => products, { nullable: false })
   brand: Brand;
 
   @CreateDateColumn()

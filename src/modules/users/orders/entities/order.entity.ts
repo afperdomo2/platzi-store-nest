@@ -14,7 +14,7 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Customer, ({ orders }) => orders)
+  @ManyToOne(() => Customer, ({ orders }) => orders, { nullable: false })
   customer: Customer;
 
   @CreateDateColumn()
