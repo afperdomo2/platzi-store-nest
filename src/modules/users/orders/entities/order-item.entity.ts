@@ -1,31 +1,31 @@
-// import { Product } from 'src/modules/products/products/entities/product.entity';
-// import {
-//   Column,
-//   CreateDateColumn,
-//   Entity,
-//   ManyToOne,
-//   PrimaryGeneratedColumn,
-//   UpdateDateColumn,
-// } from 'typeorm';
-// import { Order } from './order.entity';
+import { Product } from '../../../products/products/entities/product.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Order } from './order.entity';
 
-// @Entity({ name: 'orders_items' })
-// export class OrderItem {
-//   @PrimaryGeneratedColumn()
-//   id: number;
+@Entity({ name: 'orders_items' })
+export class OrderItem {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-//   @ManyToOne(() => Order, ({ items }) => items)
-//   order: Order;
+  @ManyToOne(() => Order, ({ items }) => items, { nullable: false })
+  order: Order;
 
-//   @ManyToOne(() => Product)
-//   product: Product;
+  @ManyToOne(() => Product, { nullable: false })
+  product: Product;
 
-//   @Column('int')
-//   quantity: number;
+  @Column('int')
+  quantity: number;
 
-//   @CreateDateColumn()
-//   createdAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-//   @UpdateDateColumn()
-//   updatedAt: Date;
-// }
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
