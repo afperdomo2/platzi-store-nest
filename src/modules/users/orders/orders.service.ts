@@ -1,26 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { CustomersService } from '../customers/customers.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { Order } from './entities/order.entity';
 
 @Injectable()
 export class OrdersService {
-  create(createOrderDto: CreateOrderDto) {
-    return 'This action adds a new order';
+  constructor(
+    @InjectRepository(Order) private repository: Repository<Order>,
+    private customerService: CustomersService,
+  ) {}
+
+  async create(createOrder: CreateOrderDto) {
+    const newOrder = new Order();
+    if (createOrder.customerId) {
+      const { customerId } = createOrder;
+      newOrder.customer = await this.customerService.findOne(customerId);
+    }
+    return await this.repository.save(newOrder);
   }
 
-  findAll() {
-    return `This action returns all orders`;
+  async findAll(options?: any) {
+    return this.repository.find({ ...options });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findOne(id: number, options?: any) {
+    const category = await this.repository.findOne({
+      where: { id },
+      ...options,
+    });
+    if (!category) {
+      throw new NotFoundException(`Category #${id} not found`);
+    }
+    return category;
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async update(id: number, updateOrder: UpdateOrderDto) {
+    const order = await this.findOne(id);
+    if (updateOrder.customerId) {
+      const { customerId } = updateOrder;
+      order.customer = await this.customerService.findOne(customerId);
+    }
+    return this.repository.save(order);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  async remove(id: number) {
+    await this.findOne(id);
+    return await this.repository.delete(id);
   }
 }

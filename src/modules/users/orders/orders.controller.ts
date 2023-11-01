@@ -1,16 +1,24 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { OrdersService } from './orders.service';
+import {
+  ApiCreatedResponse,
+  ApiNoContentResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { OrdersService } from './orders.service';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -18,27 +26,42 @@ export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+  @ApiOperation({ summary: 'Create a new order' })
+  @ApiCreatedResponse({ description: 'Category created successfully' })
+  create(@Body() createOrder: CreateOrderDto) {
+    return this.ordersService.create(createOrder);
   }
 
   @Get()
+  @ApiOperation({ summary: 'List all orders' })
   findAll() {
-    return this.ordersService.findAll();
+    return this.ordersService.findAll({ relations: ['customer'] });
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
+  @ApiOperation({ summary: 'Find a order' })
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.ordersService.findOne(id, {
+      relations: ['customer', 'items', 'items.product'],
+    });
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Update order data' })
+  @ApiNoContentResponse({ description: 'Order updated successfully' })
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateOrder: UpdateOrderDto,
+  ) {
+    return this.ordersService.update(id, updateOrder);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.ordersService.remove(+id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete a order' })
+  @ApiNoContentResponse({ description: 'Order deleted successfully' })
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.ordersService.remove(id);
   }
 }

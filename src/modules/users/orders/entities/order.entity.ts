@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Customer } from '../../customers/entities/customer.entity';
-import { OrderItem } from './order-item.entity';
+import { OrderItem } from '../../orders-items/entities/order-item.entity';
 
 @Entity({ name: 'orders' })
 export class Order {
