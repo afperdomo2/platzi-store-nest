@@ -40,7 +40,9 @@ export class OrdersItemsService {
   }
 
   async update(id: number, updateOrdersItem: UpdateOrderItemDto) {
-    return `This action updates a #${id} ordersItem`;
+    const item = await this.findOne(id);
+    this.repository.merge(item, updateOrdersItem);
+    return await this.repository.save(item);
   }
 
   async remove(id: number) {

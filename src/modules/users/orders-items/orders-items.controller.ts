@@ -47,6 +47,9 @@ export class OrdersItemsController {
   }
 
   @Patch(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Update order item data' })
+  @ApiNoContentResponse({ description: 'Order item updated successfully' })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateOrdersItemDto: UpdateOrderItemDto,
