@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   Res,
 } from '@nestjs/common';
 import {
@@ -22,6 +23,7 @@ import { Response } from 'express';
 import { ParseIdPipe } from '../../../common/parse-id/parse-id.pipe';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { FilterProductsDto } from './dto/filter-products.dto';
 import { ProductsService } from './products.service';
 
 @ApiTags('products')
@@ -48,8 +50,8 @@ export class ProductsController {
 
   @Get()
   @ApiOperation({ summary: 'List all products' })
-  findAll() {
-    return this.productsService.findAll({ relations: ['brand'] });
+  findAll(@Query() params: FilterProductsDto) {
+    return this.productsService.findAll(params);
   }
 
   @Get(':id')

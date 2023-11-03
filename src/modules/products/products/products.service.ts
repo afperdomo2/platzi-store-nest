@@ -6,6 +6,7 @@ import { BrandsService } from '../brands/brands.service';
 import { CategoriesService } from '../categories/categories.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { FilterProductsDto } from './dto/filter-products.dto';
 import { Product } from './entities/product.entity';
 
 @Injectable()
@@ -31,8 +32,11 @@ export class ProductsService {
     return await this.repository.save(newProduct);
   }
 
-  async findAll(options?: any) {
-    return await this.repository.find({ ...options });
+  async findAll(params: FilterProductsDto) {
+    const pagination: any = params
+      ? { take: params.limit, skip: params.offset }
+      : {};
+    return await this.repository.find({ ...pagination, relations: ['brand'] });
   }
 
   async findOne(id: number, options?: any) {

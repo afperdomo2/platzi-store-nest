@@ -22,6 +22,14 @@ async function bootstrap() {
        * están en la lista blanca, el validador lanzará un error.
        */
       forbidNonWhitelisted: true,
+
+      transformOptions: {
+        /**
+         * Si se establece en verdadero, el transformador de clase intentará la conversión
+         * según el tipo reflejado de TS
+         */
+        enableImplicitConversion: true,
+      },
     }),
   );
 
