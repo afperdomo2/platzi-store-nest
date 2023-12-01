@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -34,15 +35,20 @@ export class Product {
   image: string;
 
   @ManyToOne(() => Brand, ({ products }) => products, { nullable: false })
+  @JoinColumn({ name: 'brand_id' })
   brand: Brand;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
   @ManyToMany(() => Category, ({ products }) => products)
-  @JoinTable({ name: 'products_categories' })
+  @JoinTable({
+    name: 'products_categories',
+    joinColumn: { name: 'product_id' },
+    inverseJoinColumn: { name: 'category_id' },
+  })
   categories: Category[];
 }

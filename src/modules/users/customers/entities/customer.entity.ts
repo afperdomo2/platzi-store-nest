@@ -18,16 +18,16 @@ export class Customer {
   @Column('varchar', { length: 255 })
   name: string;
 
-  @Column('varchar', { length: 255 })
+  @Column('varchar', { length: 255, name: 'last_name' })
   lastName: string;
 
   @Column('varchar', { length: 255 })
   phone: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
   @OneToOne(() => User, ({ customer }) => customer, { nullable: true })
