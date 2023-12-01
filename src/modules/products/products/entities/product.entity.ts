@@ -2,11 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
 } from 'typeorm';
 import { Brand } from '../../brands/entities/brand.entity';
 import { Category } from '../../categories/entities/category.entity';
@@ -16,6 +17,7 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Index()
   @Column('varchar', { length: 255 })
   name: string;
 
